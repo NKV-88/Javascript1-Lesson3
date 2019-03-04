@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset=UTF-8">
+
+
+	<title>Bulls and cows</title>
+</head>
+<body>
+	<script type="text/javascript">
+
+		// 1 - комп. загадал число
+		// 2 - пользователь вводит ответы, пока не угадает, либо пока не истечет 10 ходов
+		// 3 - компьютер проверяет введенные ответы
+
+		var gen = function (){
+			let arr = [];
+
+			while (arr.length < 4){
+				let arrItem = Math.floor (Math.random () * 10);
+				if (arr.indexOf(arrItem) < 0) {
+					arr.push(arrItem);
+				}
+			}
+			//console.log(arr);
+			return arr;
+		};
+		
+		
+		var check = function (number, task) {
+			let playerArray = [];
+			let playerArrElement;
+
+			//console.log(playerArray);
+			for (let i = 0; i < 4; i++) {
+				playerArrElement = parseInt(number.substr(i, 1)); 
+				playerArray.push(playerArrElement);
+			}
+
+			let bulls = 0;
+			let cows = 0;
+
+			for (let i = 0; i < 4; i++) {
+				if (playerArray[i] == task[i]) {
+					bulls++;
+				} else if (task.indexOf(playerArray[i]) >= 0) {
+					cows++;
+				}
+			}
+
+			console.log(number);
+			console.log('быков: ' + bulls + '; коров: ' + cows);
+
+			if (bulls == 4) {
+				console.log ('Вы победили! Загаданное число: '+ task.join())
+				return true;
+			}
+		};
+
+		var game = function () {
+			let arr = gen ();
+			console.log ('Отгадай загаданное число!');
+			let end = false;
+			let count = 10;
+			while (end != true) {
+				if (count == 0) {
+					alert ('game over');
+					alert ('Загаданное число: ' + arr)
+					break;
+				} else {
+					let userNumber = prompt ('Введите число : ' + 'Осталось ' + count + ' ходов');
+					count--;
+					end = check (userNumber, arr);
+				}
+			}
+		};
+
+		game ();
+
+	</script>
+
+</body></html>
